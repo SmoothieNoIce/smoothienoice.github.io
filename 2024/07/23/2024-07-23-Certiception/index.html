@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/assets/favicon.ico?v=2.1.1" type="image/png" sizes="16x16"><link rel="icon" href="/assets/favicon.ico?v=2.1.1" type="image/png" sizes="32x32"><meta name="description" content="白皮書: “*Certified Pre-Owned: Abusing Active Directory Certificate Services”* https:&#x2F;&#x2F;tttang.com&#x2F;archive&#x2F;1593&#x2F;#toc_061-misconfigured-certificate-templates-esc1                     Certiception       Ref">
+<meta property="og:type" content="article">
+<meta property="og:title" content="srlabs&#x2F;Certiception 安裝教學">
+<meta property="og:url" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/index.html">
+<meta property="og:site_name" content="普洱的網路日誌">
+<meta property="og:description" content="白皮書: “*Certified Pre-Owned: Abusing Active Directory Certificate Services”* https:&#x2F;&#x2F;tttang.com&#x2F;archive&#x2F;1593&#x2F;#toc_061-misconfigured-certificate-templates-esc1                     Certiception       Ref">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%203.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%204.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%205.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%206.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%207.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%208.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%209.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2010.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2011.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2012.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2013.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2014.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2015.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2016.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%201.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%202.png">
+<meta property="article:published_time" content="2024-07-22T16:07:25.000Z">
+<meta property="article:modified_time" content="2024-07-22T16:21:48.237Z">
+<meta property="article:author" content="Flexolk">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="ADCS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%203.png"><title>srlabs/Certiception 安裝教學 | 普洱的網路日誌</title><link ref="canonical" href="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.1.1"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"複製","copySuccess":"複製成功","copyError":"複製失敗"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.1"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首頁</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">歸檔</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/categories/"><span class="header-nav-menu-item__icon"><i class="fas fa-layer-group"></i></span><span class="header-nav-menu-item__text">分類</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/tags/"><span class="header-nav-menu-item__icon"><i class="fas fa-tags"></i></span><span class="header-nav-menu-item__text">標籤</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/about/"><span class="header-nav-menu-item__icon"><i class="fas fa-address-card"></i></span><span class="header-nav-menu-item__text">關於</span></a></div></div><div class="header-nav-search"><span class="header-nav-search__icon"><i class="fas fa-search"></i></span><span class="header-nav-search__text">搜尋</span></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">普洱的網路日誌</div><div class="header-banner-info__subtitle"></div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">srlabs/Certiception 安裝教學</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">發表於</span><span class="post-meta-item__value">2024-07-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新於</span><span class="post-meta-item__value">2024-07-23</span></span></div></header><div class="post-body"><p>白皮書: “<span class="exturl"><a class="exturl__link"   href="https://www.specterops.io/assets/resources/Certified_Pre-Owned.pdf"  target="_blank" rel="noopener">*Certified Pre-Owned: Abusing Active Directory Certificate Services</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>”*</p>
+<p><span class="exturl"><a class="exturl__link"   href="https://tttang.com/archive/1593/#toc_061-misconfigured-certificate-templates-esc1"  target="_blank" rel="noopener">https://tttang.com/archive/1593/#toc_061-misconfigured-certificate-templates-esc1</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h1 id="Certiception"   >
+          <a href="#Certiception" class="heading-link"><i class="fas fa-link"></i></a>Certiception</h1>
+      <p>Reference:</p>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   href="https://www.gss.com.tw/blog/ansible-5"  target="_blank" rel="noopener">https://www.gss.com.tw/blog/ansible-5</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://medium.com/ianyc/ansible-windows%E9%80%A3%E7%B7%9A%E8%A8%AD%E5%AE%9A-basic-certificate-authentication-6750611d3764"  target="_blank" rel="noopener">https://medium.com/ianyc/ansible-windows連線設定-basic-certificate-authentication-6750611d3764</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+<p>本專案使用 Ansible，需要一台 linux 的 controller 及一台被操作的 windows server</p>
+<ol>
+<li><p>windows 安裝 winrm</p>
+<ul>
+<li>可於<span class="exturl"><a class="exturl__link"   href="https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html#winrm-listener"  target="_blank" rel="noopener">連結</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>下載 powershell script 檔，然後在需要被安裝的 windows host 上執行安裝 winrm</li>
+</ul>
+</li>
+<li><p>設定 Certiception</p>
+<ul>
+<li><p>在 controller 上下載</p>
+<p>  <span class="exturl"><a class="exturl__link"   href="https://github.com/srlabs/Certiception"  target="_blank" rel="noopener">https://github.com/srlabs/Certiception</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</li>
+<li><p>安裝 ansible</p>
+<p>  <span class="exturl"><a class="exturl__link"   href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html"  target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+  <figure class="highlight jsx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -m pip install --user ansible</span><br></pre></td></tr></table></div></figure>
+</li>
+</ul>
+</li>
+<li><p>在 windows 建立 Enterprise Admin account</p>
+<ul>
+<li><p>創建名稱為 <code>Vagrant</code> 的 <code>Enterprise Admin account</code>，並根據資料在 controller 內編輯專案裡面的 inventory.yml</p>
+<aside>
+💡 創建 Vagrant EA 的截圖，需要在創建 User 完後加進 Group 內
+
+<p><img src="Untitled%203.png" alt="Untitled"></p>
+</aside>
+
+<aside>
+💡 創建 Enterprise Admin account 時，如果遇到密碼不符合時，可修改 policy
+
+<p><img src="Untitled%204.png" alt="Untitled"></p>
+<p><img src="Untitled%205.png" alt="Untitled"></p>
+<p><img src="Untitled%206.png" alt="Untitled"></p>
+</aside>
+</li>
+</ul>
+</li>
+<li><p>執行 Ansible 指令</p>
+ <aside>
+ 💡 安裝前要注意不能有 ADCS，因為 ansible 會幫你裝好
+
+ </aside>
+
+ <figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible-playbook -i inventory.yml playbooks/certiception.yml -vvv</span><br></pre></td></tr></table></div></figure>
+
+ <aside>
+ 💡 Please provide the password for the configured Enterprise Admin account (needed to register the new CA):
+ 為 Vagrant 的密碼
+
+ </aside>
+
+ <aside>
+ 💡 Please provide the password for the become user (local admin) on the honeypot CA server
+ 為 local admin(Administrator)的密碼
+
+ </aside>
+
+<p> <img src="Untitled%207.png" alt="Untitled"></p>
+<p> 如果沒遇到錯誤就是安裝成功</p>
+ <aside>
+ 💡 Exception calling "CreateProcessAsUser" with "9" argument(s): "Failed to logon [Vagrant@speed.cs.nycu.edu.tw](mailto:Vagrant@speed.cs.nycu.edu.tw) (Logon failure: the user has not been granted the requested logon type at this computer, Win32ErrorCode 1385 - 0x00000569)"
+
+<p> 解: 設定這兩個 GPO </p>
+<p> <img src="Untitled%208.png" alt="Untitled"></p>
+<p> <img src="Untitled%209.png" alt="Untitled"></p>
+ </aside>
+</li>
+<li><p>確認 ESC1HoneypotTemplate Template 是否被安裝</p>
+<p> <img src="Untitled%2010.png" alt="Untitled"></p>
+ <aside>
+ 💡 如果沒有可以試試手動 issue
+
+<p> <img src="Untitled%2011.png" alt="Untitled"></p>
+<p> <img src="Untitled%2012.png" alt="Untitled"></p>
+ </aside>
+</li>
+<li><p>觀察 Bloodhound</p>
+<ul>
+<li><p>在靶機上使用 Sharphound 來進行 AD graph 蒐集，然後匯入新版的 Bloodhound</p>
+</li>
+<li><p>可以觀察到 ADCSESC1 這條假 Edge 已經出現在 Bloodhound 內</p>
+<p>  <img src="Untitled%2013.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>使用 Certify 進行確認</p>
+<ul>
+<li><p>在靶機上使用 Certify，並確認證書</p>
+  <figure class="highlight jsx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Certify.exe find /vulnerable</span><br></pre></td></tr></table></div></figure>
+
+<p>  <img src="Untitled%2014.png" alt="Untitled"></p>
+</li>
+<li><p>使用 Certify 請求證書，如果 CA Response 為 Denied by Policy Module 表示成功安裝</p>
+<p>  <img src="Untitled%2015.png" alt="Untitled"></p>
+<p>💡 可用 <strong>certutil.exe 找到 ca-name</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+
+        <h2 id="Certiception-原理"   >
+          <a href="#Certiception-原理" class="heading-link"><i class="fas fa-link"></i></a>Certiception 原理</h2>
+      <ol>
+<li>Certiception 會幫你自動創好一個 CA，但一個 Domain 內只有一個 CA，所以不能先有 ADCS</li>
+<li>ESC1HoneypotTemplate 確實是易受攻擊的證書，但使用 TameMyCerts 來阻止證書發放</li>
+</ol>
+<ul>
+<li><p>因為 ESC1 主要是利用 SAN，而 TameMyCerts 偵測到 request 包含 SAN 時就會取消</p>
+<p>  <img src="Untitled%2016.png" alt="螢幕擷取畫面 2024-07-22 220539.png"></p>
+</li>
+</ul>
+<ol start="3">
+<li>專案中使用 <code>ADCSTemplate</code> 來創建 Template，然後自動發放 ESC1HoneypotTemplate</li>
+</ol>
+
+        <h1 id="ESC1"   >
+          <a href="#ESC1" class="heading-link"><i class="fas fa-link"></i></a>ESC1</h1>
+      <ul>
+<li>Misconfigured Certificate Templates - ESC1</li>
+</ul>
+<p>憑證範本有一組特定的設置，使它們極易被攻擊者利用，以實現網域權限提升。下面我們來介紹第一種配置情況（ESC1）：</p>
+<ol>
+<li><p>Enterprise CA 授予低特權使用者註冊權限</p>
+</li>
+<li><p>Manager approval 被禁用</p>
+</li>
+<li><p>無需授權簽名</p>
+</li>
+<li><p>過於寬鬆的憑證範本安全描述符會授予低特權使用者憑證註冊權限。</p>
+</li>
+<li><p>憑證範本定義了啟用網域驗證的 EKU。</p>
+</li>
+<li><p>憑證範本允許請求者在 CSR 中指定 subjectAltName</p>
+<ul>
+<li><p>這裡主要關注到最後一個配置條件。回想一下，在 AD 驗證期間，AD 將使用憑證的 subjectAltName（SAN）欄位指定身分。因此，如果請求者可以在 CSR 中指定 SAN，則請求者可以以任何人（例如，網域管理員使用者）的身分要求憑證。憑證範本在其 AD 物件的 mspki-certificate-name-flag 屬性中指定請求者是否可以在其中指定 SAN。 mspki-certificate-name-flag 屬性是位元掩碼，如果存在 CT_FLAG_ENROLLEE_SUPPLIES_SUBJECT 標誌，則請求者可以指定 SAN。在憑證範本控制台 MMC 管理單元中，此值在範本的 “屬性” 的 “使用者名稱” 標籤中進行設置，如下圖所示，勾選 “在要求中提供(S)” 即可。</p>
+<p>  <img src="Untitled%201.png" alt="Untitled"></p>
+<p>  <img src="Untitled%202.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+</ol>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文結束，感謝您的閱讀 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="https://smoothienoice.github.io">Flexolk</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文連結: </span><span class="copyright-link__value"><a href="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/">https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版權聲明: </span><span class="copyright-notice__value">本部落格所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 許可協議。轉載請注明出處！</span></div></div><div class="post-tags"><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://smoothienoice.github.io/tags/Active-Directory/">Active Directory</a></span><span class="post-tags-item"><span class="post-tags-item__icon"><i class="fas fa-tag"></i></span><a class="post-tags-item__link" href="https://smoothienoice.github.io/tags/ADCS/">ADCS</a></span></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/01/25/2021-01-25-%E4%BD%BF%E7%94%A8Laravel_Sanctum%E5%AF%A6%E4%BD%9C%E8%A8%BB%E5%86%8A%E7%99%BB%E5%85%A5%E7%99%BB%E5%87%BA/"><span class="paginator-prev__text">使用Laravel Sanctum實作註冊登入登出</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div><div class="comments" id="comments"><div id="disqus_thread"></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目錄</span><span class="sidebar-nav-ov">本站概覽</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Certiception"><span class="toc-number">1.</span> <span class="toc-text">
+          Certiception</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Certiception-原理"><span class="toc-number">1.1.</span> <span class="toc-text">
+          Certiception 原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ESC1"><span class="toc-number">2.</span> <span class="toc-text">
+          ESC1</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/assets/profilePic.png" alt="avatar"></div><p class="sidebar-ov-author__text">Flexolk</p></div><div class="sidebar-ov-social"><a class="sidebar-ov-social-item" href="https://github.com/SmoothieNoIce" target="_blank" rel="noopener" data-popover="Github" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fab fa-github"></i></span></a><a class="sidebar-ov-social-item" href="https://flexolk.me" target="_blank" rel="noopener" data-popover="個人網站" data-popover-pos="up"><span class="sidebar-ov-social-item__icon"><i class="fas fa-user"></i></span></a></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">2</div><div class="sidebar-ov-state-item__name">歸檔</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--categories" href="/categories/"><div class="sidebar-ov-state-item__count">2</div><div class="sidebar-ov-state-item__name">分類</div></a><a class="sidebar-ov-state-item sidebar-ov-state-item--tags" href="/tags/"><div class="sidebar-ov-state-item__count">5</div><div class="sidebar-ov-state-item__name">標籤</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知識共享許可協議" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已閱讀了 </span><span class="sidebar-reading-info__num">0</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2024</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Flexolk</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><div class="search-mask"></div><div class="search-popup"><span class="search-close"></span><div class="search-input"><input placeholder="檢索文章（支持多關鍵字，請用空格分隔）"></div><div class="search-results"></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script>function initSearch() {
+  var isXML = true;
+  var search_path = 'search.json';
+
+  if (!search_path) {
+    search_path = 'search.xml';
+  } else if (/json$/i.test(search_path)) {
+    isXML = false;
+  }
+
+  var path = '/' + search_path;
+  $.ajax({
+    url: path,
+    dataType: isXML ? 'xml' : 'json',
+    async: true,
+    success: function (res) {
+      var datas = isXML ? $('entry', res).map(function () {
+        // 将 XML 转为 JSON
+        return {
+          title: $('title', this).text(),
+          content: $('content', this).text(),
+          url: $('url', this).text()
+        };
+      }).get() : res;
+      var $input = $('.search-input input');
+      var $result = $('.search-results');
+      // 搜索对象（标题、内容）的权重，影响显示顺序
+      var WEIGHT = { title: 100, content: 1 };
+      var searchPost = function () {
+        var searchText = $input.val().toLowerCase().trim();
+        // 根据空白字符分隔关键字
+        var keywords = searchText.split(/[\s]+/);
+        // 搜索结果
+        var matchPosts = [];
+
+        // 有多个关键字时，将原文字整个保存下来
+        if (keywords.length > 1) {
+          keywords.push(searchText);
+        }
+        // 防止未输入字符时搜索
+        if (searchText.length > 0) {
+          datas.forEach(function (data) {
+            var isMatch  = false;
+            // 没有标题的文章使用预设的 i18n 变量代替
+            var title = (data.title && data.title.trim()) || '[ 文章無標題 ]';
+            var titleLower = title && title.toLowerCase();
+            // 删除 HTML 标签 和 所有空白字符
+            var content = data.content && data.content.replace(/<[^>]+>/g, '');
+            var contentLower = content && content.toLowerCase();
+            // 删除重复的 /
+            var postURL = data.url && decodeURI(data.url).replace(/\/{2,}/g, '/');
+            // 标题中匹配到的关键词
+            var titleHitSlice = [];
+            // 内容中匹配到的关键词
+            var contentHitSlice = [];
+
+            keywords.forEach(function (keyword) {
+              /**
+              * 获取匹配的关键词的索引
+              * @param {String} keyword 要匹配的关键字
+              * @param {String} text 原文字
+              * @param {Boolean} caseSensitive 是否区分大小写
+              * @param {Number} weight 匹配对象的权重。权重大的优先显示
+              * @return {Array}
+              */
+              function getIndexByword (word, text, caseSensitive, weight) {
+                if (!word || !text) {
+                  return [];
+                };
+
+                var startIndex = 0; // 每次匹配的开始索引
+                var index = -1;     // 匹配到的索引值
+                var result = [];    // 匹配结果
+
+                if (!caseSensitive) {
+                  word = word.toLowerCase();
+                  text = text.toLowerCase();
+                }
+
+                while((index = text.indexOf(word, startIndex)) !== -1) {
+                  var hasMatch = false;
+                  // 索引位置相同的关键词，保留长度较长的
+                  titleHitSlice.forEach(function (hit) {
+                    if (hit.index === index && hit.word.length < word.length) {
+                      hit.word = word;
+                      hasMatch = true;
+                    }
+                  });
+                  startIndex = index + word.length;
+                  !hasMatch && result.push({ index: index, word: word, weight: weight });
+                }
+                return result;
+              }
+              titleHitSlice = titleHitSlice.concat(getIndexByword(keyword, titleLower, false, WEIGHT.title));
+              contentHitSlice = contentHitSlice.concat(getIndexByword(keyword, contentLower, false, WEIGHT.content));
+            });
+
+            var hitTitle = titleHitSlice.length;
+            var hitContent = contentHitSlice.length;
+
+            if (hitTitle > 0 || hitContent > 0) {
+              isMatch = true;
+            }
+            if (isMatch) {
+              ;[titleHitSlice, contentHitSlice].forEach(function (hit) {
+                // 按照匹配文字的索引的递增顺序排序
+                hit.sort(function (left, right) {
+                  return left.index - right.index;
+                });
+              });
+              /**
+              * 给文本中匹配到的关键词添加标记，从而进行高亮显示
+              * @param {String} text 原文本
+              * @param {Array} hitSlice 匹配项的索引信息
+              * @param {Number} start 开始索引
+              * @param {Number} end 结束索引
+              * @return {String}
+              */
+              function highlightKeyword (text, hitSlice, start, end) {
+                if (!text || !hitSlice || !hitSlice.length) {
+                  return;
+                }
+
+                var result = '';
+                var startIndex = start;
+                var endIndex = end;
+                hitSlice.forEach(function (hit) {
+                  if (hit.index < startIndex) {
+                    return;
+                  }
+
+                  var hitWordEnd = hit.index + hit.word.length;
+                  result += text.slice(startIndex, hit.index);
+                  result += '<b>' + text.slice(hit.index, hitWordEnd) + '</b>';
+                  startIndex = hitWordEnd;
+                });
+                result += text.slice(startIndex, endIndex);
+                return result;
+              }
+
+              var postData = {};
+              // 文章总的搜索权重
+              var postWeight = titleHitSlice.length * WEIGHT.title + contentHitSlice.length * WEIGHT.content;
+              // 标记匹配关键词后的标题
+              var postTitle = highlightKeyword(title, titleHitSlice, 0, title.length) || title;
+              // 标记匹配关键词后的内容
+              var postContent;
+              // 显示内容的长度
+              var SHOW_WORD_LENGTH = 200;
+              // 命中关键词前的字符显示长度
+              var SHOW_WORD_FRONT_LENGTH = 20;
+              var SHOW_WORD_END_LENGTH = SHOW_WORD_LENGTH - SHOW_WORD_FRONT_LENGTH;
+
+              // 截取匹配的第一个字符，前后共 200 个字符来显示
+              if (contentHitSlice.length > 0) {
+                var firstIndex = contentHitSlice[0].index;
+                var start = firstIndex > SHOW_WORD_FRONT_LENGTH ? firstIndex - SHOW_WORD_FRONT_LENGTH : 0;
+                var end = firstIndex + SHOW_WORD_END_LENGTH;
+                postContent = highlightKeyword(content, contentHitSlice, start, end);
+              } else { // 未匹配到内容，直接截取前 200 个字符来显示
+                postContent = content.slice(0, SHOW_WORD_LENGTH);
+              }
+              postData.title = postTitle;
+              postData.content = postContent;
+              postData.url = postURL;
+              postData.weight = postWeight;
+              matchPosts.push(postData);
+            }
+          });
+        }
+
+        var resultInnerHtml = '';
+        if (matchPosts.length) {
+          // 按权重递增的顺序排序，使权重大的优先显示
+          matchPosts.sort(function (left, right) {
+            return right.weight - left.weight;
+          });
+          resultInnerHtml += '<ul>';
+          matchPosts.forEach(function (post) {
+            resultInnerHtml += '<li><a class="search-results-title" href="' + post.url + '">';
+            resultInnerHtml += post.title;
+            resultInnerHtml += '</a><div class="search-results-content">';
+            resultInnerHtml += post.content;
+            resultInnerHtml += '</div></li>';
+          });
+          resultInnerHtml += '</ul>';
+        } else {
+          resultInnerHtml += '<div class="search-results-none"><i class="far fa-meh"></i></div>';
+        }
+        $result.html(resultInnerHtml);
+      };
+      $input.on('input', searchPost);
+      $input.on('keyup', function (e) {
+        if (e.keyCode === Stun.utils.codeToKeyCode('Enter')) {
+          searchPost();
+        }
+      });
+    }
+  });
+}
+
+function closeSearch () {
+  $('body').css({ overflow: 'auto' });
+  $('.search-popup').css({ display: 'none' });
+  $('.search-mask').css({ display: 'none' });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  Stun.utils.pjaxReloadLocalSearch = function () {
+    $('.header-nav-search').on('click', function (e) {
+      e.stopPropagation();
+      $('body').css('overflow', 'hidden');
+      $('.search-popup')
+        .velocity('stop')
+        .velocity('transition.expandIn', {
+          duration: 300,
+          complete: function () {
+            $('.search-popup input').focus();
+          }
+        });
+      $('.search-mask')
+        .velocity('stop')
+        .velocity('transition.fadeIn', {
+          duration: 300
+        });
+
+      initSearch();
+    });
+    $('.search-mask, .search-close').on('click', function () {
+      closeSearch();
+    });
+    $(document).on('keydown', function (e) {
+      // Escape <=> 27
+      if (e.keyCode === Stun.utils.codeToKeyCode('Escape')) {
+        closeSearch();
+      }
+    });
+  };
+
+  Stun.utils.pjaxReloadLocalSearch();
+}, false);</script><script>function loadDisqus () {
+  if (!document.getElementById('disqus_thread')) {
+    return;
+  }
+  if (window.DISQUS) {
+    DISQUS.reset({
+      reload: true,
+      config: function () {
+        this.page.url = 'https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/';
+        this.page.identifier = '2024/07/23/2024-07-23-Certiception/';
+        this.page.title = 'srlabs/Certiception 安裝教學';
+      }
+    });
+  } else {
+    var d = document;
+    var sc = d.createElement('script');
+    var se = d.createElement('script');
+
+    if (true) {
+      sc.src = 'https://smoothienoice-github-io.disqus.com/count.js';
+      sc.id = 'dsq-count-scr';
+      sc.async = true;
+      if (false) {
+        sc.setAttribute('data-pjax', '');
+      }
+      (d.head || d.body).appendChild(sc);
+    }
+    se.src = 'https://smoothienoice-github-io.disqus.com/embed.js';
+    (d.head || d.body).appendChild(se);
+  }
+}
+
+if (false) {
+  loadDisqus();
+} else {
+  window.addEventListener('DOMContentLoaded', loadDisqus, false);
+}</script><script src="/js/utils.js?v=2.1.1"></script><script src="/js/stun-boot.js?v=2.1.1"></script><script src="/js/scroll.js?v=2.1.1"></script><script src="/js/header.js?v=2.1.1"></script><script src="/js/sidebar.js?v=2.1.1"></script><script type="application/json" src="/search.json"></script></body></html>
