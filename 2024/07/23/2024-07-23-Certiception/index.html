@@ -9,6 +9,7 @@
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%204.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%205.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%206.png">
+<meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%2017.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%207.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%208.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%209.png">
@@ -22,7 +23,7 @@
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%201.png">
 <meta property="og:image" content="https://smoothienoice.github.io/2024/07/23/2024-07-23-Certiception/Untitled%202.png">
 <meta property="article:published_time" content="2024-07-22T16:07:25.000Z">
-<meta property="article:modified_time" content="2024-07-22T16:21:48.237Z">
+<meta property="article:modified_time" content="2024-07-22T16:34:52.636Z">
 <meta property="article:author" content="Flexolk">
 <meta property="article:tag" content="Active Directory">
 <meta property="article:tag" content="ADCS">
@@ -67,7 +68,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.1"></he
 <li>可於<span class="exturl"><a class="exturl__link"   href="https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html#winrm-listener"  target="_blank" rel="noopener">連結</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>下載 powershell script 檔，然後在需要被安裝的 windows host 上執行安裝 winrm</li>
 </ul>
 </li>
-<li><p>設定 Certiception</p>
+<li><p>controller 設定 Certiception</p>
 <ul>
 <li><p>在 controller 上下載</p>
 <p>  <span class="exturl"><a class="exturl__link"   href="https://github.com/srlabs/Certiception"  target="_blank" rel="noopener">https://github.com/srlabs/Certiception</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
@@ -97,7 +98,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.1"></he
 </li>
 </ul>
 </li>
-<li><p>執行 Ansible 指令</p>
+<li><p>Controller 上編輯 honeypotCA.yml, 然後在 Controller 執行 Ansible 指令<br> <img src="Untitled%2017.png" alt="Untitled"></p>
  <aside>
  💡 安裝前要注意不能有 ADCS，因為 ansible 會幫你裝好
 
@@ -127,7 +128,7 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.1"></he
 <p> <img src="Untitled%209.png" alt="Untitled"></p>
  </aside>
 </li>
-<li><p>確認 ESC1HoneypotTemplate Template 是否被安裝</p>
+<li><p>在 windows 上確認 ESC1HoneypotTemplate Template 是否被安裝</p>
 <p> <img src="Untitled%2010.png" alt="Untitled"></p>
  <aside>
  💡 如果沒有可以試試手動 issue
@@ -136,11 +137,11 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 4.2.1"></he
 <p> <img src="Untitled%2012.png" alt="Untitled"></p>
  </aside>
 </li>
-<li><p>觀察 Bloodhound</p>
+<li><p>觀察 Bloodhound 圖表</p>
 <ul>
 <li><p>在靶機上使用 Sharphound 來進行 AD graph 蒐集，然後匯入新版的 Bloodhound</p>
 </li>
-<li><p>可以觀察到 ADCSESC1 這條假 Edge 已經出現在 Bloodhound 內</p>
+<li><p>可以觀察到 ADCSESC1 這條 Edge 已經出現在 Bloodhound 內</p>
 <p>  <img src="Untitled%2013.png" alt="Untitled"></p>
 </li>
 </ul>
